@@ -1,10 +1,14 @@
 import random
 from collections import deque
+
+
+
 def ask():
     options = ['버블 정렬']
     print("1.버블 정렬")
     a = int(input("입력해주세요 : "))
     return a
+
 
 
 def bubble(l):
@@ -76,7 +80,7 @@ def lrd(l, n):
     return result
 
 #힙 생성 알고리즘
-
+'''
 g = [[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]]
 b = deque([1])
 l = [1]
@@ -85,6 +89,26 @@ print(a)
 
 r = bubble([2, 4, 3, 6, 5, 1])
 print(r)
+'''
+def main():
+    l = input()
+    s = l.split()
+
+    if s[0] == 'help':
+        print("설명")
+        return 1
+    
+    if s[0] == 'end':
+        print("종료")
+        return 0
+
+    print('다시 입력해주세요')
+    return 1
+    
+
+a = main()
+while a:
+    a = main()
 
 
 
