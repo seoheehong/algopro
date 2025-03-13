@@ -98,6 +98,20 @@ def main():
         print("설명")
         return 1
     
+    if s[0] == 'bubble':
+        if len(s) != 2:
+            print('다시 입력해주세요')
+            return 1
+        l = []
+        for i in range(int(s[1])):
+            l.append(random.randint(1, int(s[1])))
+        print(l)
+        a = bubble(l)
+        print(a)
+        return 1
+    
+    
+
     if s[0] == 'end':
         print("종료")
         return 0
