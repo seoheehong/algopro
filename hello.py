@@ -38,6 +38,51 @@ def bfs(g, q, l):
                 l.append(i+1)
     return l
 
+def sh(s, l, n, m):
+    def add(p, q):
+        s = set()
+        if 0 < p < n-1:
+            if l[p+1][q] == 1:
+                s.add((p+1, q))
+                l[p+1][q] = 2
+            if l[p-1][q] == 1:
+                s.add((p-1, q))
+                l[p-1][q] = 2
+        if p == 0:
+            if l[p+1][q] == 1:
+                s.add((p+1, q))
+                l[p+1][q] = 2
+        if p == n-1:
+            if l[p-1][q] == 1:
+                s.add((p-1, q))
+                l[p-1][q] = 2
+        if 0 < q < m-1:
+            if l[p][q+1] == 1:
+                s.add((p, q+1))
+                l[p][q+1] = 2
+            if l[p][q-1] == 1:
+                s.add((p, q-1))
+                l[p][q-1] = 2
+        if q == 0:
+            if l[p][q+1] == 1:
+                s.add((p, q+1))
+                l[p][q+1] = 2
+        if q == m-1:
+            if l[p][q-1] == 1:
+                s.add((p, q-1))
+                l[p][q-1] = 2
+        return s
+    sl = set()
+    for i in s:
+        r = add(i[0], i[1])
+        sl = sl.union(r)
+    for i in range(n):
+        print(*l[i], sep = '')
+    print('')
+    if (n-1, m-1) in sl:
+        return 0
+    sh(sl, l, n, m)
+
 def fibo(n):
     for i in range(n):
         if i == 0:
@@ -79,6 +124,14 @@ def lrd(l, n):
     result += str(l[n])
     return result
 
+# 선택 정렬
+def select(l):
+    
+    for i in range(len(l)):
+        m = min(l)
+        l[i], m = m, l[i]
+    return l
+
 #힙 생성 알고리즘
 '''
 g = [[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]]
@@ -110,6 +163,49 @@ def main():
         print(a)
         return 1
     
+    if s[0] == 'bfs':
+        sett = {(0, 0)}
+        data = ['''101111
+101010
+101011
+111011''', '''110110
+110110
+111111
+111101''', '''1011111
+1110001
+1000001
+1000001
+1000001
+1000001
+1111111''']
+        if s[1] == '1':
+            n = 4
+            m = 6
+            l = []
+            for i in data[0].split('\n'):
+                l.append(list(i))
+            l = [[int(i) for i in ll] for ll in l]
+        
+        if s[1] == '2':
+            n = 4
+            m = 6
+            l = []
+            for i in data[1].split('\n'):
+                l.append(list(i))
+            l = [[int(i) for i in ll] for ll in l]
+        
+        if s[1] == '3':
+            n = 7
+            m = 7
+            l = []
+            for i in data[2].split('\n'):
+                l.append(list(i))
+            l = [[int(i) for i in ll] for ll in l]
+
+        sh(sett, l, n, m)
+        return 1
+
+            
     
 
     if s[0] == 'end':
