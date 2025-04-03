@@ -84,22 +84,18 @@ def sh(s, l, n, m):
     sh(sl, l, n, m)
 
 def fibo(n):
-    for i in range(n):
-        if i == 0:
-            print(1)
-            a = 1
-        else:
-            print(a)
-            a += fibo(a)
-            
-    return a
+    if n < 3:
+        return 1
+    return fibo(n-1) + fibo(n-2)
+
+
 
 #전위순회
 def dlr(l, n):
     result = ''
     if len(l) <= n:
         return result
-    result += str(l[n])
+    result += (str(l[n])+',')
     result += dlr(l, n*2)
     result += dlr(l, n*2+1)
     return result
@@ -110,7 +106,7 @@ def ldr(l, n):
     if len(l) <= n:
         return result
     result += ldr(l, n*2)
-    result += str(l[n])
+    result += str(l[n]) + ','
     result += ldr(l, n*2+1)
     return result
 
@@ -121,7 +117,7 @@ def lrd(l, n):
         return result
     result += lrd(l, n*2)
     result += lrd(l, n*2+1)
-    result += str(l[n])
+    result += str(l[n]) + ','
     return result
 
 # 선택 정렬
@@ -204,9 +200,46 @@ def main():
 
         sh(sett, l, n, m)
         return 1
-
-            
+#순회 리스트 맨 앞에 0 넣기
+    if s[0] == 'dlr':
+        s[1] = s[1].replace('[','')
+        s[1] = s[1].replace(']', '')
+        #print(s[1])
+        s[1] = s[1].split(',')
+        s[1] = list(map(int, s[1]))
+        #print(s[1])
+        n = int(s[2])
+        r = dlr(s[1], n)
+        print(r)
+        return 1
     
+    if s[0] == 'ldr':
+        s[1] = s[1].replace('[','')
+        s[1] = s[1].replace(']', '')
+        #print(s[1])
+        s[1] = s[1].split(',')
+        s[1] = list(map(int, s[1]))
+        #print(s[1])
+        n = int(s[2])
+        r = ldr(s[1], n)
+        print(r)
+        return 1
+    
+    if s[0] == 'lrd':
+        s[1] = s[1].replace('[','')
+        s[1] = s[1].replace(']', '')
+        #print(s[1])
+        s[1] = s[1].split(',')
+        s[1] = list(map(int, s[1]))
+        #print(s[1])
+        n = int(s[2])
+        r = lrd(s[1], n)
+        print(r)
+        return 1
+
+    if s[0] == 'fibo':
+        print(fibo(int(s[1])))
+        return 1
 
     if s[0] == 'end':
         print("종료")
