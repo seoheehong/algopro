@@ -128,6 +128,8 @@ def select(l):
         l[i], m = m, l[i]
     return l
 
+
+
 #힙 생성 알고리즘
 '''
 g = [[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]]
@@ -139,6 +141,68 @@ print(a)
 r = bubble([2, 4, 3, 6, 5, 1])
 print(r)
 '''
+
+def dp(n, l):
+    s =  [0]
+# s[i] => 길이가 i인 부분 수열의 최소 비용
+    for i in range(len(l)):
+        for j in range(len(s)):
+            if s[j] > l[i]:
+                if s[j-1] < l[i]:
+                    s[j] = l[i]
+                    break
+            if s[-1] < l[i]:
+                s.append(l[i])
+        print(s)
+    print(len(s)-1)
+    return 1
+
+class heap:
+    def __init__(self):
+        self.data = [None]
+
+    def push(self, n):
+        self.data.append(n)
+        l = len(self.data)-1
+        while l > 1:
+            if self.f(self.data[l//2], self.data[l]) == self.data[l]:
+                self.data[l//2], self.data[l] = self.data[l], self.data[l//2]
+                l //= 2                
+            else:
+                break
+            
+    def pop(self):
+        if self.data == [None]:
+            return 'None'
+        self.data[-1], self.data[1] = self.data[1], self.data[-1]
+        r = self.data[-1]
+        del self.data[-1]
+        c = 1
+        while c <= (len(self.data)-1)//2:
+            if c*2+1 < len(self.data):
+                if self.f(self.data[c*2], self.data[c*2+1]) == self.data[c*2+1]:
+                    bigc = c*2+1
+                else:
+                    bigc = c*2
+            else:
+                bigc = c*2
+
+            if self.f(self.data[c], self.data[bigc]) == self.data[bigc]:
+                self.data[c], self.data[bigc] = self.data[bigc], self.data[c]
+                c = bigc
+            else:
+                break
+        return r
+
+    def f(self, a, b): #기준
+        if abs(a) < abs(b):
+            return b
+        if abs(a) == abs(b):
+            if a < b:
+                return b
+            return a
+        return a
+
 def main():
     l = input()
     s = l.split()
@@ -241,6 +305,27 @@ def main():
         print(fibo(int(s[1])))
         return 1
 
+    if s[0] == 'dp':
+        n = int(input())
+        l = list(map(int, input().split()))
+        dp(n, l)
+        return 1
+    
+    if s[0] == 'heap':
+        a = heap()
+        while True:
+            print('>> ', end = '')
+            n = int(input())
+            if n >= 1:
+                a.push(n)
+                print(a.data)
+            elif n == 0:
+                r = a.pop()
+                print(r, a.data)
+            else:
+                break
+        return 1
+
     if s[0] == 'end':
         print("종료")
         return 0
@@ -252,6 +337,3 @@ def main():
 a = main()
 while a:
     a = main()
-
-
-
